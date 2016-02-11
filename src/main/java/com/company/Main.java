@@ -9,12 +9,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
-    public static String PATH = "src\\resources\\mother_of_all_warehouses.in";
-    public static String OUTPUT_FILE = "src\\resources\\output.txt";
+    public static String PATH = "mother_of_all_warehouses.in";
+    public static String OUTPUT_FILE = "output.txt";
+
+    private static Order[] orderList;
+    private static int[] productWeights;
+    private static Simulation simulation;
+    private static Warehouse[] warehouseList;
 
     public static void main(String[] args) {
         File file = new File(PATH);
@@ -23,28 +28,46 @@ public class Main {
         try {
             fr = new FileReader(file);
             scanner = new Scanner(fr);
-            Simulation simulation = new Simulation();
+            simulation = new Simulation();
             putGeneralInfo(scanner, simulation);
-            int[] productWeights = putProductInfo(scanner, simulation);
+            productWeights = putProductInfo(scanner, simulation);
             for(int i : productWeights) {
                 System.out.println(i);
             }
             System.out.println(simulation);
-            Warehouse[] warehouseList = putWarehouseInfo(scanner, simulation);
+            warehouseList = putWarehouseInfo(scanner, simulation);
             for(Warehouse warehouse : warehouseList) {
                 System.out.println(warehouse);
             }
             System.out.println(simulation);
-            Order[] orderList = putOrderInfo(scanner, simulation);
+            orderList = putOrderInfo(scanner, simulation);
 
             for(Order order : orderList) {
                 System.out.println(order);
             }
 
+            for(Warehouse warehouse: warehouseList) {
+                warehouse.setUse(countUsefulness(warehouse.getCoordinates()));
+            }
 
+            for(Order order: orderList){
+                order.setUse(countUsefulness(order.getCoordinates()));
+            }
 
+            if(warehouseList.length != 1){
+                return;
+            }
 
+            Warehouse warehouse = warehouseList[0];
 
+            Map<Integer, Integer> map = warehouse.getUse();
+            List list = new ArrayList(map.entrySet());
+            Collections.sort(list, new Comparator<Map.Entry<Integer, Integer>>() {
+                @Override
+                public int compare(Map.Entry<Integer, Integer> a, Map.Entry<Integer, Integer> b) {
+                    return a.getValue() - b.getValue();
+                }
+            });
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -124,4 +147,20 @@ public class Main {
         }
         return orders;
     }
+
+    private static Map<Integer, Integer> countUsefulness(Coordinates coords) {
+
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for(Order order: orderList) {
+            int use = countDistance(coords, order.getCoordinates())*order.weight(productWeights, simulation);
+            map.put(order.getId(), use);
+
+        }
+
+        return map;
     }
+
+    private static int countDistance(Coordinates a, Coordinates b) {
+        return (int)Math.ceil(Math.sqrt(Math.pow(a.getX() - b.getX(),2) + Math.pow(a.getY()-b.getY(), 2)));
+    }
+}

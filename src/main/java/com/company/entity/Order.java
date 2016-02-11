@@ -13,6 +13,7 @@ public class Order {
     private Status status;
 
 
+
     public Coordinates getCoordinates() {
         return coordinates;
     }
@@ -59,6 +60,14 @@ public class Order {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public int weight(int[] productWeights, Simulation simulation){
+        int weight = 0;
+        for(int i = 0; i < simulation.productTypeCount; i++){
+            weight += productWeights[i]*productList[i];
+        }
+        return weight;
     }
 
     @Override

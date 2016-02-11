@@ -1,11 +1,22 @@
 package com.company.entity;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class Warehouse {
     int id;
     Coordinates coordinates;
     int[] productCount;
+
+    public Map<Integer, Integer> getUse() {
+        return use;
+    }
+
+    public void setUse(Map<Integer, Integer> use) {
+        this.use = use;
+    }
+
+    private Map<Integer, Integer> use;
 
 
     public int getId() {
