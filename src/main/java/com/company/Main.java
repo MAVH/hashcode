@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class Main {
 
     public static String PATH = "src\\resources\\mother_of_all_warehouses.in";
+    public static String OUTPUT_FILE = "src\\resources\\output.txt";
 
     public static void main(String[] args) {
         File file = new File(PATH);
