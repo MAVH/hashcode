@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static String PATH = "D:\\hashcode\\src\\resources\\mother_of_all_warehouses.in";
+    public static String PATH = "src\\resources\\mother_of_all_warehouses.in";
 
     public static void main(String[] args) {
         File file = new File(PATH);
