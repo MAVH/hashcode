@@ -2,9 +2,6 @@ package com.company.task;
 
 import java.io.*;
 
-/**
- * Created by Veronica on 2/11/2016.
- */
 public class FileTask {
     public void createFile(String path) throws IOException {
         File file = new File(path);
@@ -22,5 +19,11 @@ public class FileTask {
                 fw.close();
             }
         }
+    }
+    public void writeAtBeginning(String path, String number) throws IOException {
+        RandomAccessFile f = new RandomAccessFile(new File(path),"rw");
+        f.seek(0); // to the beginning
+        f.write(number.getBytes());
+        f.close();
     }
 }
