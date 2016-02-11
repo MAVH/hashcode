@@ -2,12 +2,16 @@ package com.company.entity;
 
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class Order {
-    int id;
-    int productCount;
-    Coordinates coordinates;
-    int[] productList;
+    private int id;
+    private int productCount;
+    private Coordinates coordinates;
+    private int[] productList;
+    private Map<Integer, Integer> use;
+    private Status status;
+
 
     public Coordinates getCoordinates() {
         return coordinates;
@@ -39,6 +43,22 @@ public class Order {
 
     public void setProductList(int[] productList) {
         this.productList = productList;
+    }
+
+    public Map<Integer, Integer> getUse() {
+        return use;
+    }
+
+    public void setUse(Map<Integer, Integer> use) {
+        this.use = use;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
